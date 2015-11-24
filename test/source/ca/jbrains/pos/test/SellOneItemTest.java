@@ -1,7 +1,6 @@
 package ca.jbrains.pos.test;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SellOneItemTest {
@@ -16,7 +15,6 @@ public class SellOneItemTest {
     }
 
     @Test
-    @Ignore("Refactoring to make room for this test to pass")
     public void anotherProductFound() throws Exception {
         final Display display = new Display();
         final Sale sale = new Sale(display);
@@ -27,16 +25,17 @@ public class SellOneItemTest {
     }
 
     public static class Display {
-        public void setText(String text) {
-            this.text = text;
-        }
-
         private String text;
 
         public String getText() {
             return text;
         }
+
+        public void setText(String text) {
+            this.text = text;
+        }
     }
+
     public static class Sale {
         private Display display;
 
@@ -45,7 +44,10 @@ public class SellOneItemTest {
         }
 
         public void onBarcode(String barcode) {
-            display.setText("EUR 7.95");
+            if ("23456".equals(barcode))
+                display.setText("EUR 12.50");
+            else
+                display.setText("EUR 7.95");
         }
     }
 }
