@@ -1,5 +1,6 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.test.SellOneItemControllerTest.Catalog;
 import ca.jbrains.pos.test.SellOneItemControllerTest.Price;
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,7 +52,7 @@ public class FindPriceInMemoryCatalogTest {
         Assert.assertEquals(null, catalog.findPrice("12345"));
     }
 
-    private static class InMemoryCatalog {
+    private static class InMemoryCatalog implements Catalog {
         private final Map<String, Price> pricesByBarcode;
 
         public InMemoryCatalog(Map<String, Price> pricesByBarcode) {
