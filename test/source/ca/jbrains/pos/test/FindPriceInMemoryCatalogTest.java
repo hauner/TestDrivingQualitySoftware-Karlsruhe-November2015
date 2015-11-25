@@ -40,6 +40,17 @@ public class FindPriceInMemoryCatalogTest {
         Assert.assertEquals(null, catalog.findPrice("12345"));
     }
 
+    @Test
+    public void productNotFound_EvenBetter() throws Exception {
+        final InMemoryCatalog catalog = new InMemoryCatalog(new HashMap() {{
+            put("not 12345", Price.cents(100));
+            put("definitely not 12345", Price.cents(200));
+            put("certainly not 12345", Price.cents(300));
+        }});
+
+        Assert.assertEquals(null, catalog.findPrice("12345"));
+    }
+
     private static class InMemoryCatalog {
         private final Map<String, Price> pricesByBarcode;
 
