@@ -5,7 +5,6 @@ import ca.jbrains.pos.test.SellOneItemControllerTest.Price;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,13 +26,16 @@ public class FindPriceInMemoryCatalogTest {
 
     @Test
     public void productNotFound() throws Exception {
-        final InMemoryCatalog catalog = new InMemoryCatalog(new HashMap() {{
-            put("not 12345", Price.cents(100));
-            put("definitely not 12345", Price.cents(200));
-            put("certainly not 12345", Price.cents(300));
-        }});
+        final String barcodeToAvoid = "::anything I want::";
+        Assert.assertEquals(null, createCatalogWithout(barcodeToAvoid).findPrice(barcodeToAvoid));
+    }
 
-        Assert.assertEquals(null, catalog.findPrice("12345"));
+    private Catalog createCatalogWithout(final String barcodeToAvoid) {
+        return new InMemoryCatalog(new HashMap() {{
+            put("not " + barcodeToAvoid, Price.cents(100));
+            put("definitely not " + barcodeToAvoid, Price.cents(200));
+            put("certainly not " + barcodeToAvoid, Price.cents(300));
+        }});
     }
 
     private static class InMemoryCatalog implements Catalog {
