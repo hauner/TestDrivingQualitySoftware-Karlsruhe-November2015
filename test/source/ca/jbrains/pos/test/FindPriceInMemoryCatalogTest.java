@@ -17,23 +17,12 @@ public class FindPriceInMemoryCatalogTest {
         Assert.assertEquals(matchingPrice, catalog.findPrice("12345"));
     }
 
-    private Catalog createCatalogWith(String barcode, Price matchingPrice) {
-        return new InMemoryCatalog(Collections.singletonMap(barcode, matchingPrice));
-    }
-
-    @Test
-    public void productFoundAmongOthers() throws Exception {
-        final Price matchingPrice = Price.cents(1250);
-
-        final InMemoryCatalog catalog = new InMemoryCatalog(
-                new HashMap() {{
-                    put("not 12345", Price.cents(799));
-                    put("12345", matchingPrice);
-                    put("still not 12345", Price.cents(905));
-                }}
-        );
-
-        Assert.assertEquals(matchingPrice, catalog.findPrice("12345"));
+    private Catalog createCatalogWith(final String barcode, final Price matchingPrice) {
+        return new InMemoryCatalog(new HashMap() {{
+            put("not " + barcode, Price.cents(237462));
+            put(barcode, matchingPrice);
+            put("definitely not " + barcode, Price.cents(236431));
+        }});
     }
 
     @Test
