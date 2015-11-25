@@ -24,9 +24,9 @@ public class FindPriceInMemoryCatalogTest {
 
         final InMemoryCatalog catalog = new InMemoryCatalog(
                 new HashMap() {{
-                    put("23456", Price.cents(799));
+                    put("not 12345", Price.cents(799));
                     put("12345", matchingPrice);
-                    put("34567", Price.cents(905));
+                    put("still not 12345", Price.cents(905));
                 }}
         );
 
